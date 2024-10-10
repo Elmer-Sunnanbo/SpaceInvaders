@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8711607906431698080}
   - component: {fileID: 3252191531317072804}
   - component: {fileID: 8109960138335477134}
+  - component: {fileID: 6559344045170895038}
   m_Layer: 8
   m_Name: Invader3
   m_TagString: Untagged
@@ -175,3 +176,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b159529cdd3bc4a4d9cd203c4a6cf564, type: 3}
   - {fileID: 21300000, guid: f579eb44a5b7b394cb56456fd3deddd1, type: 3}
   animationTime: 0.3
+--- !u!114 &6559344045170895038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015849234908360402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cef26a7a0dae2634f967c5b87c4ac63a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
