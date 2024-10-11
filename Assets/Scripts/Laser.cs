@@ -7,9 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Laser : Projectile
 {
+
     private void Awake()
     {
         direction = Vector3.up;
+        speed = 200;
     }
 
     void Update()
@@ -28,9 +30,9 @@ public class Laser : Projectile
     void CheckCollision(Collider2D collision)
     {
         Bunker bunker = collision.gameObject.GetComponent<Bunker>();
-        if(bunker == null) //Om det inte är en bunker vi träffat så ska skottet försvinna.
+        if(bunker == null) //Om det inte Ã¤r en bunker vi trÃ¤ffat sÃ¥ ska skottet fÃ¶rsvinna.
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
         if(collision.gameObject.TryGetComponent(out EnemyCore FoundCore)) //If the hit object has an EnemyCore
         {

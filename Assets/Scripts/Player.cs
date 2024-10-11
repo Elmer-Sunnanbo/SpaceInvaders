@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && laser == null)
         {
-            laser = Instantiate(laserPrefab, transform.position, Quaternion.identity);
+            laser = Instantiate(laserPrefab, transform.position + new Vector3(0,2), Quaternion.identity);
         }
     }
 
