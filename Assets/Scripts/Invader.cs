@@ -12,6 +12,9 @@ public class Invader : MonoBehaviour
 {
     public Sprite[] animationSprites = new Sprite[2];
     public float animationTime;
+    EnemyCore MyCore;
+    [SerializeField] GameObject MyDeath;
+
 
     SpriteRenderer spRend;
     int animationFrame;
@@ -21,6 +24,7 @@ public class Invader : MonoBehaviour
     {
         spRend = GetComponent<SpriteRenderer>();
         spRend.sprite = animationSprites[0];
+        MyCore = GetComponent<EnemyCore>();
     }
 
     void Start()
@@ -44,7 +48,7 @@ public class Invader : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Laser"))
         {
-            GameManager.Instance.OnInvaderKilled(this);
+            //GameManager.Instance.OnInvaderKilled(this);
         }
         else if(collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //nått nedre kanten
         {
@@ -52,4 +56,12 @@ public class Invader : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (MyCore.HasBeenHit)
+        {
+            Instantiate(MyDeath, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
 }
