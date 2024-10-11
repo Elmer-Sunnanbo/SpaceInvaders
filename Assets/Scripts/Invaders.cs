@@ -10,7 +10,7 @@ public class Invaders : MonoBehaviour
     public GameObject[] prefab = new GameObject[5];
 
     private int row = 5;
-    private int col = 11;
+    private int col = 7;
 
     private Vector3 initialPosition;
     private Vector3 direction = Vector3.right;
@@ -109,20 +109,23 @@ public class Invaders : MonoBehaviour
         float speed = 1f;
         transform.position += speed * Time.deltaTime * direction;
 
-        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
+        //Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
+        //Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
+
+        float leftEdge = -10;
+        float rightEdge = 10;
 
         foreach (Transform invader in transform)
         {
             if (!invader.gameObject.activeInHierarchy) //Kolla bara invaders som lever
                 continue;
 
-            if (direction == Vector3.right && invader.position.x >= rightEdge.x - 1f)
+            if (direction == Vector3.right && invader.position.x >= rightEdge - 1f)
             {
                 AdvanceRow();
                 break;
             }
-            else if (direction == Vector3.left && invader.position.x <= leftEdge.x + 1f)
+            else if (direction == Vector3.left && invader.position.x <= leftEdge + 1f)
             {
                 AdvanceRow();
                 break;
