@@ -30,15 +30,13 @@ public class Laser : Projectile
     void CheckCollision(Collider2D collision)
     {
         Bunker bunker = collision.gameObject.GetComponent<Bunker>();
-
-        if(bunker == null) //Om det inte är en bunker vi träffat så ska skottet försvinna.
+        if(bunker == null) //Om det inte Ã¤r en bunker vi trÃ¤ffat sÃ¥ ska skottet fÃ¶rsvinna.
         {
             //Destroy(gameObject);
         }
-        if(collision.TryGetComponent<EnemyCore>(out EnemyCore FoundCore))
+        if(collision.gameObject.TryGetComponent(out EnemyCore FoundCore)) //If the hit object has an EnemyCore
         {
-            FoundCore.Hit();
+            FoundCore.Hit(); //Inform it that it's been hit
         }
-    
     }
 }

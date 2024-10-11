@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCore : MonoBehaviour
+public class GoreTesting : MonoBehaviour
 {
+    [SerializeField] GameObject AttackPrefab;
     // Start is called before the first frame update
-    public bool HasBeenHit = false;
     void Start()
     {
         
@@ -14,11 +14,9 @@ public class EnemyCore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void Hit()
-    {
-        HasBeenHit = true;
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(AttackPrefab, new Vector2(0,-12), Quaternion.identity);
+        }
     }
 }
