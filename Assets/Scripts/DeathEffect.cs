@@ -10,7 +10,7 @@ public class DeathEffect : MonoBehaviour
     {
         foreach (GameObject Piece in GorePieces)
         {
-            Instantiate(Piece);
+            Instantiate(Piece, transform.position, Quaternion.identity);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
             PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f)); 
             if(Random.Range(1,0)  == 0 )
