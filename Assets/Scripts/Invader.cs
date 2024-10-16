@@ -62,6 +62,7 @@ public class Invader : MonoBehaviour
         {
             Instantiate(MyDeath, transform.position, Quaternion.identity);
             Destroy(gameObject);
+            ScreenShake.Instance.ShakeCam(0.1f, 0.3f);
         }
     }
 }

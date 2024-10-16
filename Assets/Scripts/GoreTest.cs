@@ -19,6 +19,7 @@ public class GoreTest : MonoBehaviour
         {
             Destroy(gameObject);
             Instantiate(MyDeath);
+            ScreenShake.Instance.ShakeCam(0.5f, 1f);
         }
     }
 }
