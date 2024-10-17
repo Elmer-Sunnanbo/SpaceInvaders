@@ -16,14 +16,30 @@ public class Player : MonoBehaviour
 
     private float speed = 5f;
 
+    private float chargeTime = 0.5f;
+    private float chargeTimer = 0f;
+    private bool isCharging = false;
+    private bool isFullyCharged = false;
+
     public enum WeaponType { Laser, Shotgun, Grenade }
     private WeaponType currentWeapon = WeaponType.Laser;
 
     void Update()
     {
         HandleMovement();
-        HandleShooting();
         HandleWeaponSwitching();
+
+        if (currentWeapon == WeaponType.Laser)
+        {
+            HandleLaserChargingAndFiring();
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FireInstantWeapon();
+            }
+        }
     }
 
     private void HandleMovement()
@@ -46,31 +62,62 @@ public class Player : MonoBehaviour
         transform.position = position;
     }
 
-    private void HandleShooting()
+    private void HandleLaserChargingAndFiring()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            switch (currentWeapon)
+            if (!isCharging)
             {
-                case WeaponType.Laser:
-                    if (laser == null)
-                    {
-                        laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-                    }
-                    break;
-                case WeaponType.Shotgun:
-                    if (shotgun == null)
-                    {
-                        shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-                    }
-                    break;
-                case WeaponType.Grenade:
-                    if (grenade == null)
-                    {
-                        grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-                    }
-                    break;
+                isCharging = true;
+                chargeTimer = 0f;
+                isFullyCharged = false;
+                Debug.Log("Charging laser...");
             }
+
+            chargeTimer += Time.deltaTime;
+
+            if (chargeTimer >= chargeTime)
+            {
+                isFullyCharged = true;
+                Debug.Log("Laser fully charged!");
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            if (isFullyCharged && laser == null)
+            {
+                FireLaser();
+            }
+            else
+            {
+                Debug.Log("Charge interrupted.");
+            }
+
+            isCharging = false;
+            chargeTimer = 0f;
+            isFullyCharged = false;
+        }
+    }
+
+    private void FireLaser()
+    {
+        laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+        Debug.Log("Laser fired!");
+    }
+
+    private void FireInstantWeapon()
+    {
+        switch (currentWeapon)
+        {
+            case WeaponType.Shotgun:
+                shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                Debug.Log("Shotgun fired!");
+                break;
+            case WeaponType.Grenade:
+                grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                Debug.Log("Grenade thrown!");
+                break;
         }
     }
 
@@ -79,16 +126,20 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentWeapon = WeaponType.Laser;
+            Debug.Log("Switched to Laser");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentWeapon = WeaponType.Shotgun;
+            Debug.Log("Switched to Shotgun");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentWeapon = WeaponType.Grenade;
+            Debug.Log("Switched to Grenade");
         }
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("Missile") || collision.gameObject.layer == LayerMask.NameToLayer("Invader"))
@@ -97,3 +148,4 @@ public class Player : MonoBehaviour
         }
     }
 }
+
