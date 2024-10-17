@@ -2,14 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 public class Player : MonoBehaviour
 {
     public Laser laserPrefab;
-    Laser laser;
-    float speed = 5f;
+    public Shotgun shotgunPrefab;
+    public Grenade grenadePrefab;
+
+    private Laser laser;
+    private Shotgun shotgun;
+    private Grenade grenade;
+
+    private float speed = 5f;
+
+    private float chargeTime = 0.5f;
+    private float chargeTimer = 0f;
+    private bool isCharging = false;
+    private bool isFullyCharged = false;
+
+    public enum WeaponType { Laser, Shotgun, Grenade }
+    private WeaponType currentWeapon = WeaponType.Laser;
     Rigidbody2D Rigidbody;
 
     private void Start()
@@ -17,10 +30,28 @@ public class Player : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //Vector3 position = transform.position;
+        HandleMovement();
+        HandleWeaponSwitching();
+
+        if (currentWeapon == WeaponType.Laser)
+        {
+            HandleLaserChargingAndFiring();
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                FireInstantWeapon();
+            }
+        }
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 position = transform.position;
 
         int HorizontalInput = 0;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
@@ -40,14 +71,86 @@ public class Player : MonoBehaviour
         Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
 
         position.x = Mathf.Clamp(position.x, leftEdge.x, rightEdge.x);
-
         transform.position = position;
         */
-        
+    }
 
-        if (Input.GetKeyDown(KeyCode.Space) && laser == null)
+    private void HandleLaserChargingAndFiring()
+    {
+        if (Input.GetKey(KeyCode.Space))
         {
-            laser = Instantiate(laserPrefab, transform.position + new Vector3(0,2), Quaternion.identity);
+            if (!isCharging)
+            {
+                isCharging = true;
+                chargeTimer = 0f;
+                isFullyCharged = false;
+                Debug.Log("Charging laser...");
+            }
+
+            chargeTimer += Time.deltaTime;
+
+            if (chargeTimer >= chargeTime)
+            {
+                isFullyCharged = true;
+                Debug.Log("Laser fully charged!");
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            if (isFullyCharged && laser == null)
+            {
+                FireLaser();
+            }
+            else
+            {
+                Debug.Log("Charge interrupted.");
+            }
+
+            isCharging = false;
+            chargeTimer = 0f;
+            isFullyCharged = false;
+        }
+    }
+
+    private void FireLaser()
+    {
+        laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+        Debug.Log("Laser fired!");
+    }
+
+    private void FireInstantWeapon()
+    {
+        switch (currentWeapon)
+        {
+            case WeaponType.Shotgun:
+                shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                Debug.Log("Shotgun fired!");
+                break;
+            case WeaponType.Grenade:
+                grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                Debug.Log("Grenade thrown!");
+                break;
+        }
+    }
+
+
+    private void HandleWeaponSwitching()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            currentWeapon = WeaponType.Laser;
+            Debug.Log("Switched to Laser");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            currentWeapon = WeaponType.Shotgun;
+            Debug.Log("Switched to Shotgun");
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            currentWeapon = WeaponType.Grenade;
+            Debug.Log("Switched to Grenade");
         }
     }
 
@@ -59,3 +162,4 @@ public class Player : MonoBehaviour
         }
     }
 }
+
