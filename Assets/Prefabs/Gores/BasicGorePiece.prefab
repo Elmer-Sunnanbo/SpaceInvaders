@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3262529523046780333}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.3536101, w: 0.9353929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -102,6 +102,7 @@ MonoBehaviour:
   StartRotation: -563.911
   SlowdownFactor: 0.8
   SlowdownFactorRotation: 0.8
+  VelocityModifier: 0
 --- !u!50 &4785585629470398134
 Rigidbody2D:
   serializedVersion: 4
