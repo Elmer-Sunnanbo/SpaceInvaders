@@ -53,3 +53,5 @@ MonoBehaviour:
   - {fileID: 3262529523046780333, guid: c24f719f8af311347b8bb69bb5b8ee6a, type: 3}
   - {fileID: 3262529523046780333, guid: 8d57250eb52cbbc4884eb62e25c393cf, type: 3}
   - {fileID: 3262529523046780333, guid: 782060fb498a00447830085c4991f693, type: 3}
+  BloodParticle: {fileID: 3262529523046780333, guid: 8e992cf632ecddb42b04e0868b053115, type: 3}
+  BloodCount: 100

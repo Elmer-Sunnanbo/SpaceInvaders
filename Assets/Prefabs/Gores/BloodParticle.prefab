@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8620682553735673977}
   - component: {fileID: 2532666099133261642}
-  - component: {fileID: 7226031000075286952}
   - component: {fileID: 4785585629470398134}
+  - component: {fileID: 7857350612063547189}
   m_Layer: 0
-  m_Name: TestGore1
+  m_Name: BloodParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,9 +27,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3262529523046780333}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.9642327, w: 0.26505724}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -72,11 +72,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1280556373
-  m_SortingLayer: 1
+  m_SortingLayerID: 1002496011
+  m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86770507f755f96428d08369351a7fda, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -2413806693520163455, guid: 8fe2ba24fc72a4e4bb0f230a9fefe01d, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -86,23 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7226031000075286952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3262529523046780333}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58df981004af277479ff62bd535bb133, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartVelocity: {x: -15.131165, y: 10.0676775}
-  StartRotation: -536.46643
-  SlowdownFactor: 0.8
-  SlowdownFactorRotation: 0.8
-  VelocityModifier: 1
 --- !u!50 &4785585629470398134
 Rigidbody2D:
   serializedVersion: 4
@@ -130,3 +113,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7857350612063547189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262529523046780333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2626b7986a7df734c82481427d0d5c3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartVelocity: {x: 0, y: 0}
+  SlowdownFactor: 0.8
+  VelocityModifier: 1.4
+  StartColor: {r: 1, g: 0, b: 0.12621355, a: 0}
+  MinBrightness: 0.2
+  FadeTime: 1.5
