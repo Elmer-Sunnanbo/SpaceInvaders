@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DeathEffect : MonoBehaviour
 {
-    // Start is called before the first frame update
     [SerializeField] List<GameObject> GorePieces = new List<GameObject>();
     [SerializeField] GameObject BloodParticle;
     [SerializeField] int BloodCount;
@@ -15,7 +14,7 @@ public class DeathEffect : MonoBehaviour
             GameObject Piece = Instantiate(SelectedPiece, transform.position, Quaternion.identity);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
             PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f)); 
-            if(Random.Range(1,0)  == 0 )
+            if(Random.Range(1,0)  == 0 ) //Randomizes a rotation speed
             {
                 PieceScript.StartRotation = Random.Range(100f, 600f);
             }
@@ -40,12 +39,6 @@ public class DeathEffect : MonoBehaviour
             ParticleScript.SlowdownFactor = 0.8f;
             Particle.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     /// <summary>
@@ -80,9 +73,9 @@ public class DeathEffect : MonoBehaviour
     /// </returns>
     Vector2 GetLaunchVector(float Angle)
     {
-        float DegreeRotation = Random.Range(0f, Angle);
-        Vector2 Vector = new Vector2(Mathf.Sin(DegreeRotation * Mathf.Deg2Rad), Mathf.Cos(DegreeRotation * Mathf.Deg2Rad));
-        if(Random.Range(0,2) ==  0)
+        float DegreeRotation = Random.Range(0f, Angle);  //Get an angle (right of center)
+        Vector2 Vector = new Vector2(Mathf.Sin(DegreeRotation * Mathf.Deg2Rad), Mathf.Cos(DegreeRotation * Mathf.Deg2Rad));//Get a vector from the angle
+        if (Random.Range(0,2) ==  0) //50% chance to flip angle to left of center
         {
             Vector.x *= -1;
         }
@@ -99,9 +92,9 @@ public class DeathEffect : MonoBehaviour
     /// </returns>
     Vector2 GetLaunchVectorCenterWeighted(float Angle)
     {
-        float DegreeRotation = Random.Range(0f, Angle) * GetWeightedNumber() * 2;
-        Vector2 Vector = new Vector2(Mathf.Sin(DegreeRotation * Mathf.Deg2Rad), Mathf.Cos(DegreeRotation * Mathf.Deg2Rad));
-        if (Random.Range(0, 2) == 0)
+        float DegreeRotation = Random.Range(0f, Angle) * GetWeightedNumber() * 2; //Get a weighted angle (right of center)
+        Vector2 Vector = new Vector2(Mathf.Sin(DegreeRotation * Mathf.Deg2Rad), Mathf.Cos(DegreeRotation * Mathf.Deg2Rad)); //Get a vector from the angle
+        if (Random.Range(0, 2) == 0) //50% chance to flip angle to left of center
         {
             Vector.x *= -1;
         }

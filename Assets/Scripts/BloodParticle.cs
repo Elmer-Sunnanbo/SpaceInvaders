@@ -17,12 +17,13 @@ public class BloodParticle : MonoBehaviour
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        Rigidbody.velocity = StartVelocity * VelocityModifier;
+        Rigidbody.velocity = StartVelocity * 1.2f; 
         SR = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
     {
+        //Reduces the brightness of the color until it reaches MinBrightness
         RemainingBrightness -= Time.deltaTime/FadeTime;
         
         RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1);
@@ -31,6 +32,7 @@ public class BloodParticle : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         Rigidbody.velocity *= SlowdownFactor;
     }
 }

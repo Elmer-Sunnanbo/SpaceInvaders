@@ -7,7 +7,7 @@ public class ScreenShake : MonoBehaviour
     public static ScreenShake Instance { get; private set; }
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null) //Ensures there is always only 1 ScreenShake, accessible through the static ScreenShake.Instance.
         {
             Destroy(gameObject);
         }
@@ -19,12 +19,10 @@ public class ScreenShake : MonoBehaviour
 
 
 
-    List<Shake> ActiveShakes = new List<Shake>();
-    Vector3 CameraPosition;
-    public Transform ThisTransform;
+    List<Shake> ActiveShakes = new List<Shake>(); //All ongoing shake effects.
+    Vector3 CameraPosition; //Camera position to return to.
     void Start()
     {
-        ThisTransform = transform;
         CameraPosition = transform.position;
     }
 
@@ -34,31 +32,39 @@ public class ScreenShake : MonoBehaviour
         ShakeAll();
     }
 
+    /// <summary>
+    /// Queues a camera shake with the seleced time and strength.
+    /// </summary>
+    /// <param name="Time"></param>
+    /// <param name="Strength"></param>
     public void ShakeCam(float Time, float Strength)
     {
         ActiveShakes.Add(new Shake(Time, Strength));
     }
 
+    /// <summary>
+    /// Deteriorates all active shakes and shakes by the strongest one
+    /// </summary>
     void ShakeAll()
     {
         if (ActiveShakes.Count > 0)
         {
-            Shake StrongestShake = new Shake(1, 100);
-            foreach (Shake shake in ActiveShakes)
+            Shake StrongestShake = new Shake(69, 420); //Serves no purpose other than to make variable not empty so errors aren't thrown
+            foreach (Shake shake in ActiveShakes) //Gets the strongest shake
             {
                 float MaxStrength = 0;
-                shake.RemainingTime -= Time.deltaTime;
+                //shake.RemainingTime -= Time.deltaTime;
 
                 if (shake.RemainingStrength >= MaxStrength)
                 {
                     StrongestShake = shake;
                 }
             }
-            ShakeCamera(StrongestShake);
-            List<Shake> ToBeRemoved = new List<Shake>();
+            ShakeCamera(StrongestShake); //Shakes by the strongest shake's stength
+            List<Shake> ToBeRemoved = new List<Shake>(); //List of finished shakes to clear from list
             foreach (Shake shake in ActiveShakes)
             {
-                if (shake.Deteriorate())
+                if (shake.Deteriorate()) //If the shake is over, mark it for deletion
                 {
                     ToBeRemoved.Add(shake);
                 }
@@ -70,7 +76,11 @@ public class ScreenShake : MonoBehaviour
         }
     }
 
-    void ShakeCamera(Shake shake)
+    /// <summary>
+    /// Moves the camera in a random direction a distance equal to the shake's strength
+    /// </summary>
+    /// <param name="shake"></param>
+    void ShakeCamera(Shake shake) 
     {
         float DegreeRotation = UnityEngine.Random.Range(0f, 90f);
         float Opposite = shake.RemainingStrength * Mathf.Sin(DegreeRotation);
@@ -93,8 +103,10 @@ public class ScreenShake : MonoBehaviour
         }
     }
 }
-
-class Shake
+/// <summary>
+/// Keeps track of Time and Strength
+/// </summary>
+class Shake 
 {
     public float StartTime;
     public float StartStrength;
@@ -108,7 +120,10 @@ class Shake
         RemainingTime = Time;
         RemainingStrength = Strength;
     }
-
+    /// <summary>
+    /// Reduces time and strength of the shake
+    /// </summary>
+    /// <returns></returns>
     public bool Deteriorate()
     {
         RemainingTime -= Time.deltaTime;
