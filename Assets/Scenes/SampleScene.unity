@@ -310,7 +310,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &608208760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,7 +1146,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1862172237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +1160,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserPrefab: {fileID: 1290055444463765415, guid: a4199a65460267f43a8dfe5fe402710f, type: 3}
+  shotgunPrefab: {fileID: 0}
+  grenadePrefab: {fileID: 0}
+  speed: 10
 --- !u!61 &1862172238
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1234,6 +1237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa497bbe76f585c42b33380de81c489a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SpawnXMax: 9.5
+  SpawnY: 12
+  Bouncer: {fileID: 2731049630562673581, guid: 390336d7c7e32b243a20b59a7351f1a5, type: 3}
+  Diver: {fileID: 2731049630562673581, guid: cc8aa4dc184aa6746aea3151ef100801, type: 3}
+  TimeBetweenWaves: 2
 --- !u!4 &1961240336
 Transform:
   m_ObjectHideFlags: 0

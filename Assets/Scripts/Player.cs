@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     private Shotgun shotgun;
     private Grenade grenade;
 
-    private float speed = 5f;
+    [SerializeField] float speed;
 
     private float chargeTime = 0.5f;
     private float chargeTimer = 0f;
