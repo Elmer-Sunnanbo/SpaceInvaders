@@ -237,8 +237,13 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd639421e89d4304186f80ad9379a5cf, type: 3}
+<<<<<<< Updated upstream
 --- !u!1 &519420028
 GameObject:
+=======
+--- !u!1001 &419105229
+PrefabInstance:
+>>>>>>> Stashed changes
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1195,6 +1200,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserPrefab: {fileID: 1290055444463765415, guid: a4199a65460267f43a8dfe5fe402710f, type: 3}
+  shotgunPrefab: {fileID: 0}
+  grenadePrefab: {fileID: 0}
 --- !u!61 &1862172238
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1345,7 +1352,11 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+<<<<<<< Updated upstream
   - {fileID: 519420032}
+=======
+  - {fileID: 419105229}
+>>>>>>> Stashed changes
   - {fileID: 1862172234}
   - {fileID: 7079283561034570670}
   - {fileID: 154018287}
