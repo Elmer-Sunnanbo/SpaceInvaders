@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
 public class GameManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float SpawnY;
     [SerializeField] GameObject Bouncer;
     [SerializeField] GameObject Diver;
+    [SerializeField] GameObject Mine;
     [SerializeField] float TimeBetweenWaves;
     float WaveCooldown = 0;
 
@@ -70,6 +72,21 @@ public class GameManager : MonoBehaviour
                 new EnemySpawn {Enemy = Diver, Xposition = 0 },
                 new EnemySpawn {Enemy = Diver, Xposition = 5 },
             }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -7 },
+                new EnemySpawn {Enemy = Mine, Xposition = 1 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = -2 },
+                new EnemySpawn {Enemy = Diver, Xposition = 3 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = 0 },
+            }},
         };
     }
 
@@ -99,6 +116,10 @@ public class GameManager : MonoBehaviour
             NewGame();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Main Menu");
+        }
 
         WaveCooldown -= Time.deltaTime;
         if(WaveCooldown <= 0)

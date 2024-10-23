@@ -233,8 +233,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MyDeath: {fileID: 6384454158891598051, guid: 3dc71a3a813b58149bf77ed39d0cf56d, type: 3}
   EntryTime: 0.5
-  EntrySpeed: 8
+  EntrySpeed: 6
   BackSpeed: 1.5
   BackTime: 0.5
   ReadyTime: 0
-  DiveAcc: 0.05
+  DiveAcc: 0.07
