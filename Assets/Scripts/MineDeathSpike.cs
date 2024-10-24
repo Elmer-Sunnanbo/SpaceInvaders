@@ -6,6 +6,7 @@ public class MineDeathSpike : MonoBehaviour
 {
     //[SerializeField] float Speed;
     Rigidbody2D Rigidbody;
+    public float Angle;
     private void Awake()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -24,7 +25,7 @@ public class MineDeathSpike : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out EnemyCore FoundCore)) //If the hit object has an EnemyCore
         {
-            FoundCore.Hit(); //Inform it that it's been hit
+            FoundCore.Hit(Angle-90); //Inform it that it's been hit
         }
         if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary") || collision.gameObject.layer == LayerMask.NameToLayer("Sidebarrier")) //If the hit object is a boundary or wall
         {
