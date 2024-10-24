@@ -22,21 +22,16 @@ public class Laser : Projectile
     {
         CheckCollision(collision);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(gameObject); //The boundary is the only object with a collider (not a trigger)
-    }
 
     void CheckCollision(Collider2D collision)
     {
-        Bunker bunker = collision.gameObject.GetComponent<Bunker>();
-        if(bunker == null) //Om det inte är en bunker vi träffat så ska skottet försvinna.
-        {
-            //Destroy(gameObject);
-        }
         if(collision.gameObject.TryGetComponent(out EnemyCore FoundCore)) //If the hit object has an EnemyCore
         {
             FoundCore.Hit(); //Inform it that it's been hit
+        }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //If the hit object is a boundary
+        {
+            Destroy(gameObject); //Time to die
         }
     }
 }

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
 public class GameManager : MonoBehaviour
@@ -12,6 +13,15 @@ public class GameManager : MonoBehaviour
     private Invaders invaders;
     private MysteryShip mysteryShip;
     private Bunker[] bunkers;
+    [SerializeField] float SpawnXMax;
+    [SerializeField] float SpawnY;
+    [SerializeField] GameObject Bouncer;
+    [SerializeField] GameObject Diver;
+    [SerializeField] GameObject Mine;
+    [SerializeField] float TimeBetweenWaves;
+    float WaveCooldown = 0;
+
+    List<Wave> PotentialWaves;
 
     //Används ej just nu, men ni kan använda de senare
     public int score { get; private set; } = 0;
@@ -27,7 +37,59 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        PotentialWaves = new List<Wave>
+        {
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -3 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 0 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 5 }
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 5 }
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 0 },
+                new EnemySpawn {Enemy = Diver, Xposition = 2 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 5 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Diver, Xposition = -5 },
+                new EnemySpawn {Enemy = Diver, Xposition = 7 },
+
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
+                new EnemySpawn {Enemy = Diver, Xposition = 0 },
+                new EnemySpawn {Enemy = Diver, Xposition = 5 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = -7 },
+                new EnemySpawn {Enemy = Mine, Xposition = 1 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = -2 },
+                new EnemySpawn {Enemy = Diver, Xposition = 3 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = 0 },
+            }},
+        };
     }
+
 
     private void OnDestroy()
     {
@@ -53,6 +115,18 @@ public class GameManager : MonoBehaviour
         {
             NewGame();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("Main Menu");
+        }
+
+        WaveCooldown -= Time.deltaTime;
+        if(WaveCooldown <= 0)
+        {
+            WaveCooldown += TimeBetweenWaves;
+            SpawnRandomWave();
+        }
     }
 
     private void NewGame()
@@ -65,8 +139,8 @@ public class GameManager : MonoBehaviour
 
     private void NewRound()
     {
-        invaders.ResetInvaders();
-        invaders.gameObject.SetActive(true);
+        //invaders.ResetInvaders();
+        //invaders.gameObject.SetActive(true);
 
         for (int i = 0; i < bunkers.Length; i++)
         {
@@ -86,7 +160,8 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        invaders.gameObject.SetActive(false);
+        //invaders.gameObject.SetActive(false);
+        SceneManager.LoadScene("Death Screen");
     }
 
     private void SetScore(int score)
@@ -102,7 +177,8 @@ public class GameManager : MonoBehaviour
     public void OnPlayerKilled(Player player)
     {
 
-        player.gameObject.SetActive(false);
+        GameOver();
+        //player.gameObject.SetActive(false);
 
     }
 
@@ -125,11 +201,40 @@ public class GameManager : MonoBehaviour
 
     public void OnBoundaryReached()
     {
+        /*
         if (invaders.gameObject.activeSelf)
         {
             invaders.gameObject.SetActive(false);
             OnPlayerKilled(player);
         }
+        */
+        GameOver();
     }
 
+    void SpawnRandomWave()
+    {
+        SpawnWave(PotentialWaves[Random.Range(0, PotentialWaves.Count)]);
+    }
+
+    void SpawnWave(Wave Wave)
+    {
+        int Mirror = 1; //If this is -1, the spawn will be flipped.
+        if(Random.Range(0,2) == 0) { Mirror = -1; } //50% chance to flip.
+        
+        foreach (EnemySpawn Spawn in Wave.Spawns)
+        {
+            Instantiate(Spawn.Enemy, new Vector2(Spawn.Xposition*Mirror, SpawnY), Quaternion.identity);
+        }
+    }
+}
+
+class Wave
+{
+    public List<EnemySpawn> Spawns;
+}
+
+class EnemySpawn
+{
+    public GameObject Enemy;
+    public float Xposition = 0;
 }
