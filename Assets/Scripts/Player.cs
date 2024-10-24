@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
                 isCharging = true;
                 chargeTimer = 0f;
                 isFullyCharged = false;
-                Debug.Log("Charging laser...");
+                //Debug.Log("Charging laser...");
             }
 
             chargeTimer += Time.deltaTime;
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
             if (chargeTimer >= chargeTime)
             {
                 isFullyCharged = true;
-                Debug.Log("Laser fully charged!");
+                //Debug.Log("Laser fully charged!");
             }
         }
 
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Debug.Log("Charge interrupted.");
+                //Debug.Log("Charge interrupted.");
             }
 
             isCharging = false;
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
     private void FireLaser()
     {
         laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-        Debug.Log("Laser fired!");
+        //Debug.Log("Laser fired!");
     }
 
     private void FireInstantWeapon()
@@ -144,17 +144,17 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentWeapon = WeaponType.Laser;
-            Debug.Log("Switched to Laser");
+            //Debug.Log("Switched to Laser");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentWeapon = WeaponType.Shotgun;
-            Debug.Log("Switched to Shotgun");
+            //Debug.Log("Switched to Shotgun");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentWeapon = WeaponType.Grenade;
-            Debug.Log("Switched to Grenade");
+            //Debug.Log("Switched to Grenade");
         }
     }
 
