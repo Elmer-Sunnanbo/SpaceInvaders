@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] float speed;
 
-    private float chargeTime = 0.5f;
+    private float chargeTime = 1f;
     private float chargeTimer = 0f;
     private bool isCharging = false;
     private bool isFullyCharged = false;
@@ -124,12 +124,16 @@ public class Player : MonoBehaviour
         switch (currentWeapon)
         {
             case WeaponType.Shotgun:
-                shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-                Debug.Log("Shotgun fired!");
+                if (shotgunPrefab != null)
+                {
+                 shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                }
                 break;
             case WeaponType.Grenade:
-                grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-                Debug.Log("Grenade thrown!");
+                if (grenadePrefab != null)
+                {
+                 grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                }
                 break;
         }
     }
