@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class DeathEffect : MonoBehaviour
 {
+    public float Angle;
     [SerializeField] List<GameObject> GorePieces = new List<GameObject>();
     [SerializeField] GameObject BloodParticle;
     [SerializeField] int BloodCount;
+    List<GameObject> ActivePieces = new List<GameObject>();
     void Start()
     {
         foreach (GameObject SelectedPiece in GorePieces)
         {
             GameObject Piece = Instantiate(SelectedPiece, transform.position, Quaternion.identity);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
-            PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f)); 
-            if(Random.Range(1,0)  == 0 ) //Randomizes a rotation speed
+            PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f));
+            PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity;
+            if (Random.Range(1,0)  == 0 ) //Randomizes a rotation speed
             {
                 PieceScript.StartRotation = Random.Range(100f, 600f);
             }
@@ -35,6 +38,7 @@ public class DeathEffect : MonoBehaviour
 
             //ParticleScript.StartVelocity = new Vector2(Random.Range(-15f, 15f), GetVelocityNumber()*150);
             ParticleScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(15) * 150;
+            ParticleScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * ParticleScript.StartVelocity;
 
             ParticleScript.SlowdownFactor = 0.8f;
             Particle.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
@@ -99,5 +103,14 @@ public class DeathEffect : MonoBehaviour
             Vector.x *= -1;
         }
         return Vector.normalized;
+    }
+
+    public void Clear()
+    {
+        foreach(GameObject Object in ActivePieces)
+        {
+            Destroy(Object);
+        }
+        Destroy(gameObject);
     }
 }

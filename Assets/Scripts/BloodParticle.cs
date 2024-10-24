@@ -13,11 +13,16 @@ public class BloodParticle : MonoBehaviour
     [SerializeField] Color StartColor;
     [SerializeField] float MinBrightness;
     [SerializeField] float FadeTime;
+    [SerializeField] float TimeBetweenTrailSpawns;
+    [SerializeField] GameObject Trail;
+    float TimeUntilTrailSpawn;
     float RemainingBrightness = 1;
+
+    bool Airborne = true;
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        Rigidbody.velocity = StartVelocity * 1.2f; 
+        Rigidbody.velocity = StartVelocity * 1.2f;
         SR = GetComponent<SpriteRenderer>();
     }
 
@@ -28,11 +33,34 @@ public class BloodParticle : MonoBehaviour
         
         RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1);
         SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
+        if(Airborne)
+        {
+            TimeUntilTrailSpawn -= Time.deltaTime;
+            if (TimeUntilTrailSpawn < 0)
+            {
+                TimeUntilTrailSpawn += TimeBetweenTrailSpawns;
+                Instantiate(Trail, transform.position, Quaternion.identity);
+            }
+        }
     }
 
     void FixedUpdate()
     {
         
-        Rigidbody.velocity *= SlowdownFactor;
+        if(Airborne)
+        {
+            Rigidbody.velocity *= SlowdownFactor;
+        }
+        
+        if (Rigidbody.velocity.magnitude < 0.1f)
+        {
+            Land();
+        }
+    }
+
+    void Land()
+    {
+        Airborne = false;
+        Rigidbody.velocity = Vector2.zero;
     }
 }

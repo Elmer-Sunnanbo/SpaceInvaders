@@ -57,7 +57,7 @@ public class DiverInvader : MonoBehaviour
         SetupTimer += Time.deltaTime;
         if (MyCore.HasBeenHit)
         {
-            Instantiate(MyDeath, transform.position, Quaternion.identity);
+            Instantiate(MyDeath, transform.position, Quaternion.identity).GetComponent<DeathEffect>().Angle = MyCore.HitAngle;
             Destroy(gameObject);
             ScreenShake.Instance.ShakeCam(0.1f, 0.3f);
         }
