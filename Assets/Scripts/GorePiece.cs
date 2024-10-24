@@ -14,13 +14,14 @@ public class GorePiece : MonoBehaviour
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        Rigidbody.velocity = StartVelocity * VelocityModifier;
+        Rigidbody.velocity = StartVelocity * VelocityModifier;//Applies a modifier to the velocity. Smaller/More aerodynamic pieces usually have higher velocity
         Rigidbody.angularVelocity = StartRotation;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        //Slows down speed over time
         Rigidbody.velocity *= SlowdownFactor;
         Rigidbody.angularVelocity *= SlowdownFactorRotation;
     }
