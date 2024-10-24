@@ -237,18 +237,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd639421e89d4304186f80ad9379a5cf, type: 3}
-<<<<<<< HEAD
-<<<<<<< Updated upstream
---- !u!1 &519420028
-GameObject:
-=======
 --- !u!1001 &419105229
 PrefabInstance:
->>>>>>> Stashed changes
-=======
---- !u!1001 &546125125
-PrefabInstance:
->>>>>>> main
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
@@ -1322,15 +1312,7 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-  - {fileID: 519420032}
-=======
   - {fileID: 419105229}
->>>>>>> Stashed changes
-=======
-  - {fileID: 546125125}
->>>>>>> main
   - {fileID: 1862172234}
   - {fileID: 7079283561034570670}
   - {fileID: 154018287}
