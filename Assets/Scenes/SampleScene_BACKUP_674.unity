@@ -1160,8 +1160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   laserPrefab: {fileID: 1290055444463765415, guid: a4199a65460267f43a8dfe5fe402710f, type: 3}
-  shotgunPrefab: {fileID: -846058126886193569, guid: 618c8e911f2779f4395b99078a164c13, type: 3}
-  grenadePrefab: {fileID: 4231502821247902963, guid: 24441746774c97942aab76c2e8037973, type: 3}
+  shotgunPrefab: {fileID: 0}
+  grenadePrefab: {fileID: 0}
 --- !u!61 &1862172238
 BoxCollider2D:
   m_ObjectHideFlags: 0
