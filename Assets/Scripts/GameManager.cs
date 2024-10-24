@@ -23,8 +23,6 @@ public class GameManager : MonoBehaviour
 
     List<Wave> PotentialWaves;
 
-    bool LoadingScene = false;
-
     //Används ej just nu, men ni kan använda de senare
     public int score { get; private set; } = 0;
     public int lives { get; private set; } = 3;
@@ -44,35 +42,35 @@ public class GameManager : MonoBehaviour
         {
         new Wave{Spawns = new List<EnemySpawn>
             {
-                new EnemySpawn {Enemy = Bouncer, Xposition = -7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -3 },
                 new EnemySpawn {Enemy = Bouncer, Xposition = 0 },
                 new EnemySpawn {Enemy = Bouncer, Xposition = 5 }
             }},
         new Wave{Spawns = new List<EnemySpawn>
             {
-                new EnemySpawn {Enemy = Bouncer, Xposition = -4 },
-                new EnemySpawn {Enemy = Bouncer, Xposition = -8 },
-                new EnemySpawn {Enemy = Bouncer, Xposition = 8 },
-                new EnemySpawn {Enemy = Bouncer, Xposition = 4 }
+                new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 5 }
             }},
         new Wave{Spawns = new List<EnemySpawn>
             {
                 new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
                 new EnemySpawn {Enemy = Bouncer, Xposition = 0 },
                 new EnemySpawn {Enemy = Diver, Xposition = 2 },
-                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 5 },
             }},
         new Wave{Spawns = new List<EnemySpawn>
             {
                 new EnemySpawn {Enemy = Diver, Xposition = -5 },
-                new EnemySpawn {Enemy = Diver, Xposition = 3 },
+                new EnemySpawn {Enemy = Diver, Xposition = 7 },
 
             }},
         new Wave{Spawns = new List<EnemySpawn>
             {
                 new EnemySpawn {Enemy = Bouncer, Xposition = -5 },
                 new EnemySpawn {Enemy = Diver, Xposition = 0 },
-                new EnemySpawn {Enemy = Diver, Xposition = 4 },
+                new EnemySpawn {Enemy = Diver, Xposition = 5 },
             }},
         new Wave{Spawns = new List<EnemySpawn>
             {
@@ -120,10 +118,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!LoadingScene)
-            {
-                SceneManager.LoadScene("Main Menu");
-            }
+            SceneManager.LoadScene("Main Menu");
         }
 
         WaveCooldown -= Time.deltaTime;
@@ -166,10 +161,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         //invaders.gameObject.SetActive(false);
-        if(!LoadingScene)
-        {
-            SceneManager.LoadScene("Death Screen");
-        }
+        SceneManager.LoadScene("Death Screen");
     }
 
     private void SetScore(int score)
