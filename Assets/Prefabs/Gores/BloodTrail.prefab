@@ -100,4 +100,5 @@ MonoBehaviour:
   StartColor: {r: 1, g: 1, b: 1, a: 0}
   MinBrightness: 0.2
   FadeTime: 1.5
-  ShrinkTime: 0.1
+  ShrinkTime: 0.3
+  RemainingBrightness: 1

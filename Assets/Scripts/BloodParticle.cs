@@ -39,7 +39,9 @@ public class BloodParticle : MonoBehaviour
             if (TimeUntilTrailSpawn < 0)
             {
                 TimeUntilTrailSpawn += TimeBetweenTrailSpawns;
-                Instantiate(Trail, transform.position, Quaternion.identity);
+                GameObject LatestTrail = Instantiate(Trail, transform.position, Quaternion.identity);
+                LatestTrail.GetComponent<BloodTrail>().RemainingBrightness = RemainingBrightness;
+                LatestTrail.GetComponent<SpriteRenderer>().color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
             }
         }
     }

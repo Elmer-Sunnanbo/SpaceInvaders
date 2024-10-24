@@ -12,7 +12,7 @@ public class BloodTrail : MonoBehaviour
     [SerializeField] float FadeTime;
     [SerializeField] float ShrinkTime;
     float TimeElapsed = 0;
-    float RemainingBrightness = 1;
+    public float RemainingBrightness = 1;
     void Start()
     {
         SR = GetComponent<SpriteRenderer>();
@@ -27,15 +27,15 @@ public class BloodTrail : MonoBehaviour
         SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
 
         //Shrinks the object
-        TimeElapsed += Time.deltaTime;
+        
         if(TimeElapsed>ShrinkTime)
         {
             Destroy(gameObject);
         }
         else
         {
-            transform.localScale = Vector2.one * TimeElapsed / ShrinkTime;
+            transform.localScale = Vector2.one * (1 - (TimeElapsed / ShrinkTime));
         }
-        
+        TimeElapsed += Time.deltaTime;
     }
 }
