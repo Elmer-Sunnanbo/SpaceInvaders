@@ -14,6 +14,7 @@ public class DeathEffect : MonoBehaviour
         foreach (GameObject SelectedPiece in GorePieces)
         {
             GameObject Piece = Instantiate(SelectedPiece, transform.position, Quaternion.identity);
+            ActivePieces.Add(Piece);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
             PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f));
             PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity;
@@ -34,6 +35,7 @@ public class DeathEffect : MonoBehaviour
         for(int i = 0; i < BloodCount; i++)
         {
             GameObject Particle = Instantiate(BloodParticle, transform.position, Quaternion.identity);
+            ActivePieces.Add(Particle);
             BloodParticle ParticleScript = Particle.GetComponent<BloodParticle>();
 
             //ParticleScript.StartVelocity = new Vector2(Random.Range(-15f, 15f), GetVelocityNumber()*150);

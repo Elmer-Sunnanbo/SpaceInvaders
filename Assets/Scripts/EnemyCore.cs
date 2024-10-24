@@ -20,10 +20,12 @@ public class EnemyCore : MonoBehaviour
 
     public void Hit()
     {
+        GameManager.Instance.ActiveEnemies.Remove(gameObject);
         HasBeenHit = true;
     }
     public void Hit(float Angle)
     {
+        GameManager.Instance.ActiveEnemies.Remove(gameObject);
         HasBeenHit = true;
         HitAngle = Angle;
     }
