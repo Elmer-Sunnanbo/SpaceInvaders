@@ -18,8 +18,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Bouncer;
     [SerializeField] GameObject Diver;
     [SerializeField] GameObject Mine;
-    [SerializeField] float TimeBetweenWaves;
+    [SerializeField] float StartTimeBetweenWaves;
+    [SerializeField] float TimeBetweenWavesMultiplier;
+    [SerializeField] int SpawnsPerRound;
+    [SerializeField] float RoundBreakTime;
+    [SerializeField] NewRoundFlash Flasher;
+    float TimeBetweenWaves;
     float WaveCooldown = 0;
+    int RoundRemainingSpawns;
+    int RoundCount;
+    float RoundBreakTimer = 0;
+    bool RoundBreak = true;
+    public List<GameObject> ActiveEnemies = new List<GameObject>();
+
 
     List<Wave> PotentialWaves;
 
@@ -39,6 +50,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        TimeBetweenWaves = StartTimeBetweenWaves;
 
         PotentialWaves = new List<Wave>
         {
@@ -107,17 +119,16 @@ public class GameManager : MonoBehaviour
         invaders = FindObjectOfType<Invaders>();
         mysteryShip = FindObjectOfType<MysteryShip>();
         bunkers = FindObjectsOfType<Bunker>();
-
-        NewGame();
     }
 
     private void Update()
     {
+        /*
         if (lives <= 0 && Input.GetKeyDown(KeyCode.Return))
         {
             NewGame();
         }
-
+        */
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!LoadingScene)
@@ -126,14 +137,33 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        WaveCooldown -= Time.deltaTime;
-        if(WaveCooldown <= 0)
+        if(RoundBreak)
         {
-            WaveCooldown += TimeBetweenWaves;
-            SpawnRandomWave();
+            RoundBreakTimer += Time.deltaTime;
+            if(RoundBreakTimer > RoundBreakTime)
+            {
+                StartRound();
+            }
+        }
+        else
+        {
+            if (RoundRemainingSpawns == 0 && ActiveEnemies.Count == 0)
+            {
+                EndRound();
+            }
+            else if (RoundRemainingSpawns > 0)
+            {
+                WaveCooldown -= Time.deltaTime;
+                if (WaveCooldown <= 0)
+                {
+                    WaveCooldown += TimeBetweenWaves;
+                    SpawnRandomWave();
+                    RoundRemainingSpawns--;
+                }
+            }
         }
     }
-
+    /*
     private void NewGame()
     {
 
@@ -162,7 +192,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = position;
         player.gameObject.SetActive(true);
     }
-
+    */
     private void GameOver()
     {
         //invaders.gameObject.SetActive(false);
@@ -171,7 +201,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Death Screen");
         }
     }
-
+    
     private void SetScore(int score)
     {
         
@@ -189,7 +219,7 @@ public class GameManager : MonoBehaviour
         //player.gameObject.SetActive(false);
 
     }
-
+    /*
     public void OnInvaderKilled(Invader invader)
     {
         invader.gameObject.SetActive(false);
@@ -201,12 +231,12 @@ public class GameManager : MonoBehaviour
             NewRound();
         }
     }
-
+    
     public void OnMysteryShipKilled(MysteryShip mysteryShip)
     {
         mysteryShip.gameObject.SetActive(false);
     }
-
+    */
     public void OnBoundaryReached()
     {
         /*
@@ -231,7 +261,32 @@ public class GameManager : MonoBehaviour
         
         foreach (EnemySpawn Spawn in Wave.Spawns)
         {
-            Instantiate(Spawn.Enemy, new Vector2(Spawn.Xposition*Mirror, SpawnY), Quaternion.identity);
+            ActiveEnemies.Add(Instantiate(Spawn.Enemy, new Vector2(Spawn.Xposition * Mirror, SpawnY), Quaternion.identity));
+        }
+    }
+
+    void EndRound()
+    {
+        RoundBreakTimer = 0;
+        RoundBreak = true;
+    }
+
+    void StartRound()
+    {
+        RoundCount++;
+        RoundBreak = false;
+        Flasher.Flash();
+        ClearGore();
+        RoundRemainingSpawns = SpawnsPerRound;
+        TimeBetweenWaves *= TimeBetweenWavesMultiplier;
+    }
+
+    void ClearGore()
+    {
+        DeathEffect[] Gores = FindObjectsByType<DeathEffect>(FindObjectsSortMode.None);
+        foreach (DeathEffect Gore in Gores) 
+        {
+            Gore.Clear();
         }
     }
 }
