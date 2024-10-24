@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: BG
+    uniqueID: 2483246683
+    locked: 0
   - name: Blood
     uniqueID: 1002496011
     locked: 0
@@ -46,4 +49,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Walls
+    uniqueID: 3358286141
     locked: 0

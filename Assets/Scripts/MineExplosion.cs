@@ -27,7 +27,7 @@ public class MineExplosion : MonoBehaviour
             RecentSpike.GetComponent<MineDeathSpike>().Go(SpikeSpeed, VectorDirection);
             RecentSpike.GetComponent<MineDeathSpike>().Angle = DegreeDirection;
         }
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     // Update is called once per frame
