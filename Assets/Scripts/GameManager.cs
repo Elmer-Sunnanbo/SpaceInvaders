@@ -160,7 +160,8 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        invaders.gameObject.SetActive(false);
+        //invaders.gameObject.SetActive(false);
+        SceneManager.LoadScene("Death Screen");
     }
 
     private void SetScore(int score)
@@ -176,7 +177,8 @@ public class GameManager : MonoBehaviour
     public void OnPlayerKilled(Player player)
     {
 
-        player.gameObject.SetActive(false);
+        GameOver();
+        //player.gameObject.SetActive(false);
 
     }
 
@@ -206,6 +208,7 @@ public class GameManager : MonoBehaviour
             OnPlayerKilled(player);
         }
         */
+        GameOver();
     }
 
     void SpawnRandomWave()
