@@ -11,7 +11,7 @@ public class Laser : Projectile
     private void Awake()
     {
         direction = Vector3.up;
-        speed = 200;
+        speed = 100;
     }
 
     void Update()
