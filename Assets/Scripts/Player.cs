@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
     public Laser laserPrefab;
@@ -21,15 +22,20 @@ public class Player : MonoBehaviour
     private bool isCharging = false;
     private bool isFullyCharged = false;
 
+    [SerializeField] private AudioClip chargingSound;     
+    [SerializeField] private AudioClip fullyChargedSound;
+    [SerializeField] private AudioClip fireSound;
+    private AudioSource audioSource; 
+
     public enum WeaponType { Laser, Shotgun, Grenade }
     private WeaponType currentWeapon = WeaponType.Laser;
-    Rigidbody2D Rigidbody;
+    private Rigidbody2D Rigidbody;
 
     private void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
-
 
     void Update()
     {
@@ -56,23 +62,14 @@ public class Player : MonoBehaviour
         int HorizontalInput = 0;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            //position.x -= speed * Time.deltaTime;
             HorizontalInput -= 1;
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            //position.x += speed * Time.deltaTime;
             HorizontalInput += 1;
         }
 
         Rigidbody.velocity = new Vector2(HorizontalInput * speed, 0);
-        /*
-        Vector3 leftEdge = Camera.main.ViewportToWorldPoint(Vector3.zero);
-        Vector3 rightEdge = Camera.main.ViewportToWorldPoint(Vector3.right);
-
-        position.x = Mathf.Clamp(position.x, leftEdge.x, rightEdge.x);
-        transform.position = position;
-        */
     }
 
     private void HandleLaserChargingAndFiring()
@@ -84,7 +81,13 @@ public class Player : MonoBehaviour
                 isCharging = true;
                 chargeTimer = 0f;
                 isFullyCharged = false;
-                //Debug.Log("Charging laser...");
+
+                if (chargingSound != null)
+                {
+                    audioSource.clip = chargingSound;
+                    audioSource.loop = true; 
+                    audioSource.Play();
+                }
             }
 
             chargeTimer += Time.deltaTime;
@@ -92,7 +95,11 @@ public class Player : MonoBehaviour
             if (chargeTimer >= chargeTime)
             {
                 isFullyCharged = true;
-                //Debug.Log("Laser fully charged!");
+
+                if (fullyChargedSound != null && !audioSource.isPlaying)
+                {
+                    audioSource.PlayOneShot(fullyChargedSound);
+                }
             }
         }
 
@@ -102,9 +109,10 @@ public class Player : MonoBehaviour
             {
                 FireLaser();
             }
-            else
+
+            if (audioSource.isPlaying)
             {
-                //Debug.Log("Charge interrupted.");
+                audioSource.Stop();
             }
 
             isCharging = false;
@@ -116,7 +124,6 @@ public class Player : MonoBehaviour
     private void FireLaser()
     {
         laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
-        //Debug.Log("Laser fired!");
     }
 
     private void FireInstantWeapon()
@@ -126,35 +133,31 @@ public class Player : MonoBehaviour
             case WeaponType.Shotgun:
                 if (shotgunPrefab != null)
                 {
-                 shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                    shotgun = Instantiate(shotgunPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
                 }
                 break;
             case WeaponType.Grenade:
                 if (grenadePrefab != null)
                 {
-                 grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+                    grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
                 }
                 break;
         }
     }
-
 
     private void HandleWeaponSwitching()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             currentWeapon = WeaponType.Laser;
-            //Debug.Log("Switched to Laser");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             currentWeapon = WeaponType.Shotgun;
-            //Debug.Log("Switched to Shotgun");
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             currentWeapon = WeaponType.Grenade;
-            //Debug.Log("Switched to Grenade");
         }
     }
 
@@ -166,4 +169,3 @@ public class Player : MonoBehaviour
         }
     }
 }
-
