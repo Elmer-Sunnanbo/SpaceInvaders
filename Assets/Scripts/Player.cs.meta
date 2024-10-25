@@ -3,7 +3,13 @@ guid: 1a4b1b556243b2a4fb5e22588e1427b9
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - laserPrefab: {instanceID: 0}
+  - shotgunPrefab: {instanceID: 0}
+  - grenadePrefab: {instanceID: 0}
+  - chargingSound: {fileID: 8300000, guid: 6787cfe2ad273564aadde7f6c824ef3a, type: 3}
+  - fullyChargedSound: {fileID: 8300000, guid: 4751c8ae9904fb14198e30f98c1b00e8, type: 3}
+  - fireSound: {fileID: 8300000, guid: 6bd9a958f95e21b40b171b1a50c01ef9, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
