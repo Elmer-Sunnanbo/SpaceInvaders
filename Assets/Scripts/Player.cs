@@ -85,18 +85,23 @@ public class Player : MonoBehaviour
                 if (chargingSound != null)
                 {
                     audioSource.clip = chargingSound;
-                    audioSource.loop = true; 
+                    audioSource.loop = true;
                     audioSource.Play();
                 }
             }
 
             chargeTimer += Time.deltaTime;
 
-            if (chargeTimer >= chargeTime)
+            if (chargeTimer >= chargeTime && !isFullyCharged)
             {
                 isFullyCharged = true;
 
-                if (fullyChargedSound != null && !audioSource.isPlaying)
+                if (chargingSound != null && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+
+                if (fullyChargedSound != null)
                 {
                     audioSource.PlayOneShot(fullyChargedSound);
                 }
@@ -105,14 +110,14 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
+            if (audioSource.isPlaying && audioSource.clip == chargingSound)
+            {
+                audioSource.Stop();
+            }
+
             if (isFullyCharged && laser == null)
             {
                 FireLaser();
-            }
-
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
             }
 
             isCharging = false;
@@ -121,9 +126,15 @@ public class Player : MonoBehaviour
         }
     }
 
+
     private void FireLaser()
     {
         laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
+
+        if (fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound);
+        }
     }
 
     private void FireInstantWeapon()
@@ -142,6 +153,11 @@ public class Player : MonoBehaviour
                     grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
                 }
                 break;
+        }
+        
+        if(fireSound != null)
+        {
+            audioSource.PlayOneShot(fireSound);
         }
     }
 
