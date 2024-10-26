@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject Mine;
     [SerializeField] float StartTimeBetweenWaves;
     [SerializeField] float TimeBetweenWavesMultiplier;
-    [SerializeField] int SpawnsPerRound;
+    [SerializeField] int BaseSpawnsPerRound;
+    [SerializeField] int SpawnsIncreasePerRound;
     [SerializeField] float RoundBreakTime;
     [SerializeField] NewRoundFlash Flasher;
     float TimeBetweenWaves;
@@ -277,7 +278,7 @@ public class GameManager : MonoBehaviour
         RoundBreak = false;
         Flasher.Flash();
         ClearGore();
-        RoundRemainingSpawns = SpawnsPerRound;
+        RoundRemainingSpawns = BaseSpawnsPerRound + (SpawnsIncreasePerRound*RoundCount);
         TimeBetweenWaves *= TimeBetweenWavesMultiplier;
     }
 

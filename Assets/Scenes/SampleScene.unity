@@ -1540,7 +1540,8 @@ MonoBehaviour:
   Mine: {fileID: 2731049630562673581, guid: a35cf2c0b9d90cc46bd687a65d7b4385, type: 3}
   StartTimeBetweenWaves: 3
   TimeBetweenWavesMultiplier: 0.8
-  SpawnsPerRound: 8
+  BaseSpawnsPerRound: 6
+  SpawnsIncreasePerRound: 2
   RoundBreakTime: 3
   Flasher: {fileID: 1174368386}
   ActiveEnemies: []
