@@ -8,6 +8,7 @@ public class MineExplosion : MonoBehaviour
     [SerializeField] GameObject Spike;
     [SerializeField] float SpikeSpeed;
     [SerializeField] float SpikeCount;
+    float Timer;
     void Start()
     {
         RaycastHit2D[] Hits = Physics2D.CircleCastAll(transform.position, 3, Vector2.zero, 0);
@@ -33,6 +34,10 @@ public class MineExplosion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Timer += Time.deltaTime;
+        if (Timer > 5)
+        {
+            Destroy(gameObject);
+        }
     }
 }

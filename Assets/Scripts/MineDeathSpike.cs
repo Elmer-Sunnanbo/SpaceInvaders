@@ -27,7 +27,7 @@ public class MineDeathSpike : MonoBehaviour
         {
             FoundCore.Hit(Angle-90); //Inform it that it's been hit
         }
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary") || collision.gameObject.layer == LayerMask.NameToLayer("Sidebarrier")) //If the hit object is a boundary or wall
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary") || collision.gameObject.layer == LayerMask.NameToLayer("SideBarrier")) //If the hit object is a boundary or wall
         {
             Destroy(gameObject); //Time to die
         }

@@ -102,6 +102,33 @@ public class GameManager : MonoBehaviour
             {
                 new EnemySpawn {Enemy = Mine, Xposition = 0 },
             }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = -7 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -2 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Mine, Xposition = -6 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = 9 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -9 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = -1 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 9 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Diver, Xposition = -4 },
+                new EnemySpawn {Enemy = Diver, Xposition = 0 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 7 },
+            }},
         };
     }
 
