@@ -11,5 +11,9 @@ public class MainMenuManager : MonoBehaviour
         {
             SceneManager.LoadScene("SampleScene");
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) //Closes the game when the player hits esc
+        {
+            Application.Quit();
+        }
     }
 }

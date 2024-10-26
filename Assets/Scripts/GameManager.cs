@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Timeline.Actions;
 using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-1)]
@@ -118,6 +117,15 @@ public class GameManager : MonoBehaviour
                 new EnemySpawn {Enemy = Diver, Xposition = -4 },
                 new EnemySpawn {Enemy = Diver, Xposition = 0 },
                 new EnemySpawn {Enemy = Bouncer, Xposition = 7 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Diver, Xposition = 2 },
+                new EnemySpawn {Enemy = Bouncer, Xposition = 4 },
+            }},
+        new Wave{Spawns = new List<EnemySpawn>
+            {
+                new EnemySpawn {Enemy = Diver, Xposition = 9 },
             }},
         };
     }
