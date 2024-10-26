@@ -41,7 +41,7 @@ public class MineInvader : MonoBehaviour
             Instantiate(MyDeath, transform.position, Quaternion.identity).GetComponent<DeathEffect>().Angle = MyCore.HitAngle;
             Instantiate(MineExplosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
-            ScreenShake.Instance.ShakeCam(0.1f, 0.3f);
+            ScreenShake.Instance.ShakeCam(0.4f, 1.5f);
         }
         Rigidbody.velocity = new Vector2(0, -Speed);
     }

@@ -90,6 +90,7 @@ public class Player : MonoBehaviour
 
                 ChargeSource.Stop();
                 PingSource.Play();
+                ScreenShake.Instance.ShakeCam(0.1f, 0.1f);
             }
         }
 
@@ -114,6 +115,7 @@ public class Player : MonoBehaviour
         laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
 
         FireSource.Play();
+        ScreenShake.Instance.ShakeCam(0.15f, 0.3f);
     }
 
     private void FireInstantWeapon()
