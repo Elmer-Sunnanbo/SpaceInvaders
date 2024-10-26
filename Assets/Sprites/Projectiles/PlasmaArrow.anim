@@ -22,11 +22,11 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: 298719441, guid: d56def6e8dcca6149b73ca9ccd47c996, type: 3}
-    - time: 0.083333336
+    - time: 0.016666668
       value: {fileID: 2046980934, guid: d56def6e8dcca6149b73ca9ccd47c996, type: 3}
-    - time: 0.16666667
+    - time: 0.033333335
       value: {fileID: 1632492677, guid: d56def6e8dcca6149b73ca9ccd47c996, type: 3}
-    - time: 0.25
+    - time: 0.05
       value: {fileID: 1671523044, guid: d56def6e8dcca6149b73ca9ccd47c996, type: 3}
     - time: 1
       value: {fileID: 1977794390, guid: 8b52947dba18c234d9ddd5c4662856fe, type: 3}

@@ -7,7 +7,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Shotgun : Projectile
 {
-
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
     private void Awake()
     {
         direction = Vector3.up;

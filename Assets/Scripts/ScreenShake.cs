@@ -80,13 +80,15 @@ public class ScreenShake : MonoBehaviour
     /// Moves the camera in a random direction a distance equal to the shake's strength
     /// </summary>
     /// <param name="shake"></param>
-    void ShakeCamera(Shake shake) 
+    void ShakeCamera(Shake shake)
     {
-        float DegreeRotation = UnityEngine.Random.Range(0f, 90f);
-        float Opposite = shake.RemainingStrength * Mathf.Sin(DegreeRotation);
+        float RandomAngle = Random.Range(0f, 90f);  //Gets a random angle up to 90 degrees
 
-        float Adjacent = shake.RemainingStrength * Mathf.Cos(DegreeRotation);
-        switch (UnityEngine.Random.Range(1, 4))
+        //Gets the x and y for that angle
+        float Opposite = shake.RemainingStrength * Mathf.Sin(RandomAngle);
+        float Adjacent = shake.RemainingStrength * Mathf.Cos(RandomAngle);
+
+        switch (Random.Range(1, 4))//Applies the angle to one of four quadrants of a circle.
         {
             case 1:
                 transform.position = CameraPosition + new Vector3(Adjacent, Opposite);

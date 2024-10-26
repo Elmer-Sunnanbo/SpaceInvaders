@@ -5,19 +5,16 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-public class Laser : Projectile
+public class Laser : MonoBehaviour
 {
+    Vector3 direction = Vector3.up;
+    float speed = 100;
 
-    private void Awake()
+    void Start()
     {
-        direction = Vector3.up;
-        speed = 100;
+        GetComponent<Rigidbody2D>().velocity = speed * direction; //Send the laser flying at this speed and direction
     }
 
-    void Update()
-    {
-        transform.position += speed * Time.deltaTime * direction;
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         CheckCollision(collision);

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GoreTesting : MonoBehaviour
 {
+    /// <summary>
+    /// This script is a test script.
+    /// </summary>
     [SerializeField] GameObject AttackPrefab;
     // Start is called before the first frame update
     void Start()

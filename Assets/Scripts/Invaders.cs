@@ -6,6 +6,10 @@ using UnityEngine;
 
 public class Invaders : MonoBehaviour
 {
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
+
     //public Invader[] prefab = new Invader[5];
     public GameObject[] prefab = new GameObject[5];
 

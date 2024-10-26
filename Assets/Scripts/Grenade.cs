@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Grenade : Projectile
 {
-
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
     private void Awake()
     {
         direction = Vector3.up;

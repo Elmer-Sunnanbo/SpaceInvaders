@@ -6,7 +6,6 @@ public class DiverInvader : MonoBehaviour
 {
     EnemyCore MyCore;
     [SerializeField] GameObject MyDeath;
-    //[SerializeField] float Speed;
     [SerializeField] float EntryTime;
     [SerializeField] float EntrySpeed;
     [SerializeField] float BackSpeed;
@@ -14,24 +13,10 @@ public class DiverInvader : MonoBehaviour
     [SerializeField] float ReadyTime;
     [SerializeField] float DiveAcc;
     Rigidbody2D Rigidbody;
-    float SetupTimer;
-    /*
-    enum States
-    {
-        Entering,
-        Backing,
-        Ready,
-        Diving,
-    }
-    States State = States.Entering;
-    */
-    SpriteRenderer spRend;
-    int animationFrame;
-    // Start is called before the first frame update
+    float SetupTimer; //Tracks how far trough the phases before diving the invader is
 
     private void Awake()
     {
-        spRend = GetComponent<SpriteRenderer>();
         MyCore = GetComponent<EnemyCore>();
     }
 
@@ -42,50 +27,47 @@ public class DiverInvader : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Laser"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //When the invader reaches the lower boundary
         {
-            //GameManager.Instance.OnInvaderKilled(this);
-        }
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //nått nedre kanten
-        {
-            GameManager.Instance.OnBoundaryReached();
+            GameManager.Instance.GameOver(); //End the game
         }
     }
 
     private void Update()
     {
         SetupTimer += Time.deltaTime;
-        if (MyCore.HasBeenHit)
+
+        if (MyCore.HasBeenHit) //"On death"
         {
             Instantiate(MyDeath, transform.position, Quaternion.identity).GetComponent<DeathEffect>().Angle = MyCore.HitAngle;
             Destroy(gameObject);
-            ScreenShake.Instance.ShakeCam(0.1f, 0.3f);
+            ScreenShake.Instance.ShakeCam(0.2f, 0.5f);
         }
 
-        if(SetupTimer > EntryTime)
+        if(SetupTimer > EntryTime) //If we're past entering the screen
         {
-            if(SetupTimer > EntryTime + BackTime)
+            if(SetupTimer > EntryTime + BackTime) //If we're past backing up
             {
-                if (SetupTimer < EntryTime + BackTime + ReadyTime)
+                if (SetupTimer < EntryTime + BackTime + ReadyTime) //If we're not past the wait time
                 {
-                    Rigidbody.velocity = new Vector2(0, 0);
+                    Rigidbody.velocity = new Vector2(0, 0); //Sit still
                 }
             }
             else
             {
-                Rigidbody.velocity = new Vector2(0, BackSpeed);
+                Rigidbody.velocity = new Vector2(0, BackSpeed); //Move back at a fixed speed
             }
         }
         else
         {
-            Rigidbody.velocity = new Vector2(0, -EntrySpeed);
+            Rigidbody.velocity = new Vector2(0, -EntrySpeed); //Move onto the screen at a fixed speed
         }
     }
     private void FixedUpdate()
     {
-        if(SetupTimer > EntryTime + BackTime + ReadyTime)
+        if(SetupTimer > EntryTime + BackTime + ReadyTime) //If we're past all entry steps
         {
-            Rigidbody.velocity += new Vector2(0, -DiveAcc);
+            Rigidbody.velocity += new Vector2(0, -DiveAcc); //Accelerate downwards
         }
     }
 }
