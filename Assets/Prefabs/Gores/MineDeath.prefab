@@ -55,6 +55,7 @@ MonoBehaviour:
   - {fileID: 3262529523046780333, guid: 78f58a10b5ac9794f9b6488d3be6a8d7, type: 3}
   BloodParticle: {fileID: 3262529523046780333, guid: 8e992cf632ecddb42b04e0868b053115, type: 3}
   BloodCount: 100
+  IsOmnidirectional: 1
 --- !u!82 &3166687161005685275
 AudioSource:
   m_ObjectHideFlags: 0

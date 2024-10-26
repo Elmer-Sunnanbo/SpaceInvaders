@@ -9,6 +9,7 @@ public class DeathEffect : MonoBehaviour
     [SerializeField] GameObject BloodParticle;
     [SerializeField] int BloodCount;
     List<GameObject> ActivePieces = new List<GameObject>();
+    [SerializeField] bool IsOmnidirectional; //Determines if gore should splash in all directions
     void Start()
     {
         foreach (GameObject SelectedPiece in GorePieces)
@@ -16,8 +17,16 @@ public class DeathEffect : MonoBehaviour
             GameObject Piece = Instantiate(SelectedPiece, transform.position, Quaternion.identity);
             ActivePieces.Add(Piece);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
-            PieceScript.StartVelocity = new Vector2(Random.Range(-20f, 20f), Random.Range(10f, 50f));
-            PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity;
+            if(IsOmnidirectional)
+            {
+                PieceScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(3) * 200;
+            }
+            else
+            {
+                PieceScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(3) * 150;
+                PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity;
+            }
+            
             if (Random.Range(1,0)  == 0 ) //Randomizes a rotation speed
             {
                 PieceScript.StartRotation = Random.Range(100f, 600f);
@@ -38,9 +47,15 @@ public class DeathEffect : MonoBehaviour
             ActivePieces.Add(Particle);
             BloodParticle ParticleScript = Particle.GetComponent<BloodParticle>();
 
-            //ParticleScript.StartVelocity = new Vector2(Random.Range(-15f, 15f), GetVelocityNumber()*150);
-            ParticleScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(15) * 150;
-            ParticleScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * ParticleScript.StartVelocity;
+            if(IsOmnidirectional)
+            {
+                ParticleScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(15) * 200;
+            }
+            else
+            {
+                ParticleScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(15) * 150;
+                ParticleScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * ParticleScript.StartVelocity;
+            }
 
             ParticleScript.SlowdownFactor = 0.8f;
             Particle.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
@@ -105,6 +120,30 @@ public class DeathEffect : MonoBehaviour
             Vector.x *= -1;
         }
         return Vector.normalized;
+    }
+
+    Vector2 GetRandomDirectionVector()
+    {
+        float RandomAngle = Random.Range(0f, 90f); //Gets a random angle up to 90 degrees
+
+        //Gets the x and y for that angle
+        float Opposite = Mathf.Sin(RandomAngle);
+        float Adjacent = Mathf.Cos(RandomAngle); 
+
+        switch (Random.Range(1, 4)) //Applies the angle to one of four quadrants of a circle.
+        {
+            case 1:
+                return (new Vector2(Adjacent, Opposite).normalized);
+            case 2:
+                return (new Vector2(Adjacent, -Opposite).normalized);
+            case 3:
+                return (new Vector2(-Adjacent, -Opposite).normalized);
+            case 4:
+                return (new Vector2(-Adjacent, Opposite).normalized);
+            default:
+                Debug.LogWarning("GetRandomDirectionVector in DeathEffect had a switch error, hit the default case");
+                return (new Vector2(1, 1)); //This should never happen, but every code path must return a value.
+        }
     }
 
     public void Clear()
