@@ -102,7 +102,7 @@ MonoBehaviour:
   StartRotation: 0
   SlowdownFactor: 0.8
   SlowdownFactorRotation: 0.8
-  VelocityModifier: 0.5
+  VelocityModifier: 0.7
 --- !u!50 &4785585629470398134
 Rigidbody2D:
   serializedVersion: 4
