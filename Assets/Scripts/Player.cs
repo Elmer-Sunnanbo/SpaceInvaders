@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(AudioSource))]
 public class Player : MonoBehaviour
 {
     public Laser laserPrefab;
@@ -22,10 +21,9 @@ public class Player : MonoBehaviour
     private bool isCharging = false;
     private bool isFullyCharged = false;
 
-    [SerializeField] private AudioClip chargingSound;     
-    [SerializeField] private AudioClip fullyChargedSound;
-    [SerializeField] private AudioClip fireSound;
-    private AudioSource audioSource; 
+    [SerializeField] AudioSource ChargeSource;
+    [SerializeField] AudioSource PingSource;
+    [SerializeField] AudioSource FireSource;
 
     public enum WeaponType { Laser, Shotgun, Grenade }
     private WeaponType currentWeapon = WeaponType.Laser;
@@ -34,7 +32,6 @@ public class Player : MonoBehaviour
     private void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -82,12 +79,7 @@ public class Player : MonoBehaviour
                 chargeTimer = 0f;
                 isFullyCharged = false;
 
-                if (chargingSound != null)
-                {
-                    audioSource.clip = chargingSound;
-                    audioSource.loop = true;
-                    audioSource.Play();
-                }
+                ChargeSource.Play();
             }
 
             chargeTimer += Time.deltaTime;
@@ -96,24 +88,14 @@ public class Player : MonoBehaviour
             {
                 isFullyCharged = true;
 
-                if (chargingSound != null && audioSource.isPlaying)
-                {
-                    audioSource.Stop();
-                }
-
-                if (fullyChargedSound != null)
-                {
-                    audioSource.PlayOneShot(fullyChargedSound);
-                }
+                ChargeSource.Stop();
+                PingSource.Play();
             }
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (audioSource.isPlaying && audioSource.clip == chargingSound)
-            {
-                audioSource.Stop();
-            }
+            ChargeSource.Stop();
 
             if (isFullyCharged && laser == null)
             {
@@ -131,10 +113,7 @@ public class Player : MonoBehaviour
     {
         laser = Instantiate(laserPrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
 
-        if (fireSound != null)
-        {
-            audioSource.PlayOneShot(fireSound);
-        }
+        FireSource.Play();
     }
 
     private void FireInstantWeapon()
@@ -153,11 +132,6 @@ public class Player : MonoBehaviour
                     grenade = Instantiate(grenadePrefab, transform.position + new Vector3(0, 2), Quaternion.identity);
                 }
                 break;
-        }
-        
-        if(fireSound != null)
-        {
-            audioSource.PlayOneShot(fireSound);
         }
     }
 

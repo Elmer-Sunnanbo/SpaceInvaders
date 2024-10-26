@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 3262529523046780333, guid: 0d0ef384f2f098842b1e3f55e11507dc, type: 3}
   BloodParticle: {fileID: 3262529523046780333, guid: 8e992cf632ecddb42b04e0868b053115, type: 3}
   BloodCount: 50
+  IsOmnidirectional: 0
 --- !u!82 &3166687161005685275
 AudioSource:
   m_ObjectHideFlags: 0
@@ -66,10 +67,10 @@ AudioSource:
   m_GameObject: {fileID: 6384454158891598051}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7189264813098464881, guid: 4169acafcdef5ef47aa34890f3b6e4c3, type: 2}
   m_audioClip: {fileID: 8300000, guid: f120a4ff0046a964f83f70278fb18c8a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.301
   m_Pitch: 1
   Loop: 0
   Mute: 0
