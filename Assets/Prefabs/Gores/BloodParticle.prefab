@@ -129,7 +129,7 @@ MonoBehaviour:
   SlowdownFactor: 0.8
   VelocityModifier: 1.4
   StartColor: {r: 1, g: 1, b: 1, a: 0}
-  MinBrightness: 0.2
+  MinBrightness: 0.4
   FadeTime: 1.5
   TimeBetweenTrailSpawns: 0.02
   Trail: {fileID: 4790448144767940336, guid: 53493c5dc8ed48b47a354fcda1b48681, type: 3}
