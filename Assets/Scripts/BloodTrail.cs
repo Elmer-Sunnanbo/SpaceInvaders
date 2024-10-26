@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BloodTrail : MonoBehaviour
 {
-
     SpriteRenderer SR;
 
     [SerializeField] Color StartColor;
@@ -22,19 +21,17 @@ public class BloodTrail : MonoBehaviour
     {
         //Reduces the brightness of the color until it reaches MinBrightness
         RemainingBrightness -= Time.deltaTime / FadeTime;
+        RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1); //Stop the brightness from going below MinBrightness
+        SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness); //Applies the brightness to the color
 
-        RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1);
-        SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
-
-        //Shrinks the object
         
-        if(TimeElapsed>ShrinkTime)
+        if (TimeElapsed>ShrinkTime) //If the object is done shrinking away
         {
             Destroy(gameObject);
         }
         else
         {
-            transform.localScale = Vector2.one * (1 - (TimeElapsed / ShrinkTime));
+            transform.localScale = Vector2.one * (1 - (TimeElapsed / ShrinkTime)); //Shrinks the object
         }
         TimeElapsed += Time.deltaTime;
     }

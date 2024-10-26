@@ -9,10 +9,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    private Player player;
-    private Invaders invaders;
-    private MysteryShip mysteryShip;
-    private Bunker[] bunkers;
     [SerializeField] float SpawnXMax;
     [SerializeField] float SpawnY;
     [SerializeField] GameObject Bouncer;
@@ -24,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int SpawnsIncreasePerRound;
     [SerializeField] float RoundBreakTime;
     [SerializeField] NewRoundFlash Flasher;
+
     float TimeBetweenWaves;
     float WaveCooldown = 0;
     int RoundRemainingSpawns;
@@ -32,18 +29,11 @@ public class GameManager : MonoBehaviour
     bool RoundBreak = true;
     public List<GameObject> ActiveEnemies = new List<GameObject>();
 
-
-    List<Wave> PotentialWaves;
-
-    bool LoadingScene = false;
-
-    //Används ej just nu, men ni kan använda de senare
-    public int score { get; private set; } = 0;
-    public int lives { get; private set; } = 3;
+    List<Wave> PotentialWaves;//A list of all possible wave configurations.
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null) //Ensures there is always only 1 GameManager, accessible through the static GameManager.Instance.
         {
             Destroy(gameObject);
         }
@@ -53,7 +43,7 @@ public class GameManager : MonoBehaviour
         }
         TimeBetweenWaves = StartTimeBetweenWaves;
 
-        PotentialWaves = new List<Wave>
+        PotentialWaves = new List<Wave> //Fills up the PotentialWaves list
         {
         new Wave{Spawns = new List<EnemySpawn>
             {
@@ -140,46 +130,28 @@ public class GameManager : MonoBehaviour
             Instance = null;
         }
     }
-
-    private void Start()
-    {
-        player = FindObjectOfType<Player>();
-        invaders = FindObjectOfType<Invaders>();
-        mysteryShip = FindObjectOfType<MysteryShip>();
-        bunkers = FindObjectsOfType<Bunker>();
-    }
-
     private void Update()
     {
-        /*
-        if (lives <= 0 && Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Escape)) //Goes to the main menu when the player hits esc
         {
-            NewGame();
-        }
-        */
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!LoadingScene)
-            {
-                SceneManager.LoadScene("Main Menu");
-            }
+            SceneManager.LoadScene("Main Menu");
         }
 
-        if(RoundBreak)
+        if(RoundBreak) //If we are in the break between rounds
         {
             RoundBreakTimer += Time.deltaTime;
-            if(RoundBreakTimer > RoundBreakTime)
+            if(RoundBreakTimer > RoundBreakTime) //If break time's over
             {
                 StartRound();
             }
         }
         else
         {
-            if (RoundRemainingSpawns == 0 && ActiveEnemies.Count == 0)
+            if (RoundRemainingSpawns == 0 && ActiveEnemies.Count == 0) //If the round has no more spawns and all enemies are dead
             {
                 EndRound();
             }
-            else if (RoundRemainingSpawns > 0)
+            else if (RoundRemainingSpawns > 0) //If the round has more spawns.
             {
                 WaveCooldown -= Time.deltaTime;
                 if (WaveCooldown <= 0)
@@ -191,97 +163,25 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    /*
-    private void NewGame()
+    /// <summary>
+    /// Ends the game.
+    /// </summary>
+    public void GameOver()
     {
-
-        SetScore(0);
-        SetLives(3);
-        NewRound();
+        SceneManager.LoadScene("Death Screen");
     }
-
-    private void NewRound()
-    {
-        //invaders.ResetInvaders();
-        //invaders.gameObject.SetActive(true);
-
-        for (int i = 0; i < bunkers.Length; i++)
-        {
-            bunkers[i].ResetBunker();
-        }
-
-        Respawn();
-    }
-
-    private void Respawn()
-    {
-        Vector3 position = player.transform.position;
-        position.x = 0f;
-        player.transform.position = position;
-        player.gameObject.SetActive(true);
-    }
-    */
-    private void GameOver()
-    {
-        //invaders.gameObject.SetActive(false);
-        if(!LoadingScene)
-        {
-            SceneManager.LoadScene("Death Screen");
-        }
-    }
-    
-    private void SetScore(int score)
-    {
-        
-    }
-
-    private void SetLives(int lives)
-    {
-       
-    }
-
-    public void OnPlayerKilled(Player player)
-    {
-
-        GameOver();
-        //player.gameObject.SetActive(false);
-
-    }
-    /*
-    public void OnInvaderKilled(Invader invader)
-    {
-        invader.gameObject.SetActive(false);
-
-       
-
-        if (invaders.GetInvaderCount() == 0)
-        {
-            NewRound();
-        }
-    }
-    
-    public void OnMysteryShipKilled(MysteryShip mysteryShip)
-    {
-        mysteryShip.gameObject.SetActive(false);
-    }
-    */
-    public void OnBoundaryReached()
-    {
-        /*
-        if (invaders.gameObject.activeSelf)
-        {
-            invaders.gameObject.SetActive(false);
-            OnPlayerKilled(player);
-        }
-        */
-        GameOver();
-    }
-
+    /// <summary>
+    /// Spawns a wave from the list.
+    /// </summary>
     void SpawnRandomWave()
     {
         SpawnWave(PotentialWaves[Random.Range(0, PotentialWaves.Count)]);
     }
 
+    /// <summary>
+    /// Places down a wave
+    /// </summary>
+    /// <param name="Wave"></param>
     void SpawnWave(Wave Wave)
     {
         int Mirror = 1; //If this is -1, the spawn will be flipped.
@@ -293,12 +193,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Ends the current round
+    /// </summary>
     void EndRound()
     {
         RoundBreakTimer = 0;
         RoundBreak = true;
     }
 
+    /// <summary>
+    /// Starts a new round
+    /// </summary>
     void StartRound()
     {
         RoundCount++;
@@ -309,6 +215,9 @@ public class GameManager : MonoBehaviour
         TimeBetweenWaves *= TimeBetweenWavesMultiplier;
     }
 
+    /// <summary>
+    /// Clears all gores.
+    /// </summary>
     void ClearGore()
     {
         DeathEffect[] Gores = FindObjectsByType<DeathEffect>(FindObjectsSortMode.None);
@@ -319,12 +228,18 @@ public class GameManager : MonoBehaviour
     }
 }
 
+/// <summary>
+/// Contains a list of spawns
+/// </summary>
 class Wave
 {
     public List<EnemySpawn> Spawns;
 }
 
-class EnemySpawn
+/// <summary>
+/// Contains an enemy to spawn and a place to spawn it
+/// </summary>
+class EnemySpawn 
 {
     public GameObject Enemy;
     public float Xposition = 0;

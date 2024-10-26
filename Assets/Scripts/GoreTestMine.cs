@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GoreTestMine : MonoBehaviour
 {
+    /// <summary>
+    /// This script is a test script
+    /// </summary>
     EnemyCore MyCore;
     [SerializeField] GameObject MyDeath;
     [SerializeField] GameObject MineExplosion;

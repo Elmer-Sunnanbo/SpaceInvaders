@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class GoreTest : MonoBehaviour
 {
+    /// <summary>
+    /// This script is a test script.
+    /// </summary>
+
     EnemyCore MyCore;
     [SerializeField] GameObject MyDeath;
-    // Start is called before the first frame update
+
     void Start()
     {
         MyCore = GetComponent<EnemyCore>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (MyCore.HasBeenHit)

@@ -22,7 +22,7 @@ public class BloodParticle : MonoBehaviour
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
-        Rigidbody.velocity = StartVelocity * 1.2f;
+        Rigidbody.velocity = StartVelocity;
         SR = GetComponent<SpriteRenderer>();
     }
 
@@ -30,16 +30,17 @@ public class BloodParticle : MonoBehaviour
     {
         //Reduces the brightness of the color until it reaches MinBrightness
         RemainingBrightness -= Time.deltaTime/FadeTime;
-        
-        RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1);
-        SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
+        RemainingBrightness = Mathf.Clamp(RemainingBrightness, MinBrightness, 1); //Stop the brightness from going below MinBrightness
+        SR.color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness); //Applies the brightness to the color
+
         if(Airborne)
         {
             TimeUntilTrailSpawn -= Time.deltaTime;
             if (TimeUntilTrailSpawn < 0)
             {
                 TimeUntilTrailSpawn += TimeBetweenTrailSpawns;
-                GameObject LatestTrail = Instantiate(Trail, transform.position, Quaternion.identity);
+                //Spawn a trail particle and match it's values to those of this particle
+                GameObject LatestTrail = Instantiate(Trail, transform.position, Quaternion.identity); 
                 LatestTrail.GetComponent<BloodTrail>().RemainingBrightness = RemainingBrightness;
                 LatestTrail.GetComponent<SpriteRenderer>().color = new Color(StartColor.r * RemainingBrightness, StartColor.g * RemainingBrightness, StartColor.b * RemainingBrightness);
             }
@@ -48,18 +49,20 @@ public class BloodParticle : MonoBehaviour
 
     void FixedUpdate()
     {
-        
         if(Airborne)
         {
-            Rigidbody.velocity *= SlowdownFactor;
+            Rigidbody.velocity *= SlowdownFactor; //Slow the particle down a bit.
         }
         
-        if (Rigidbody.velocity.magnitude < 0.1f)
+        if (Rigidbody.velocity.magnitude < 0.1f)  //If the particle is slow enough, land it.
         {
             Land();
         }
     }
 
+    /// <summary>
+    /// Turns the particle into a still object
+    /// </summary>
     void Land()
     {
         Airborne = false;

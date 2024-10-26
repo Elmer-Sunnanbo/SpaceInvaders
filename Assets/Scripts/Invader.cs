@@ -10,6 +10,9 @@ using UnityEngine;
 
 public class Invader : MonoBehaviour
 {
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
     public Sprite[] animationSprites = new Sprite[2];
     public float animationTime;
     EnemyCore MyCore;
@@ -22,7 +25,7 @@ public class Invader : MonoBehaviour
 
     private void Awake()
     {
-        spRend = GetComponent<SpriteRenderer>();
+        spRend = GetComponent<SpriteRenderer>(); 
         spRend.sprite = animationSprites[0];
         MyCore = GetComponent<EnemyCore>();
     }
@@ -52,7 +55,7 @@ public class Invader : MonoBehaviour
         }
         else if(collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //nått nedre kanten
         {
-            GameManager.Instance.OnBoundaryReached();
+            //GameManager.Instance.OnBoundaryReached();
         }
     }
 

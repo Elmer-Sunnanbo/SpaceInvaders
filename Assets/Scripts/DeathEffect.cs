@@ -9,22 +9,23 @@ public class DeathEffect : MonoBehaviour
     [SerializeField] GameObject BloodParticle;
     [SerializeField] int BloodCount;
     List<GameObject> ActivePieces = new List<GameObject>();
-    [SerializeField] bool IsOmnidirectional; //Determines if gore should splash in all directions
+    [SerializeField] bool IsOmnidirectional; //Determines if gore should splash in all directions (only for when mine invaders die)
+
     void Start()
     {
-        foreach (GameObject SelectedPiece in GorePieces)
+        foreach (GameObject SelectedPiece in GorePieces) //Spawns every gore in GorePieces
         {
             GameObject Piece = Instantiate(SelectedPiece, transform.position, Quaternion.identity);
             ActivePieces.Add(Piece);
             GorePiece PieceScript = Piece.GetComponent<GorePiece>();
-            if(IsOmnidirectional)
+            if(IsOmnidirectional) //If the gore is omnidirectional
             {
-                PieceScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(3) * 200;
+                PieceScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(3) * 200; //Send the gore in a random direction at a random speed
             }
             else
             {
-                PieceScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(3) * 150;
-                PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity;
+                PieceScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(3) * 150; //Send the gore upwards at a random angle and a random speed
+                PieceScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * PieceScript.StartVelocity; //Rotates the send angle to the appropriate angle
             }
             
             if (Random.Range(1,0)  == 0 ) //Randomizes a rotation speed
@@ -35,13 +36,10 @@ public class DeathEffect : MonoBehaviour
             {
                 PieceScript.StartRotation = Random.Range(-600f, -100f);
             }
-            
-            PieceScript.SlowdownFactor = 0.8f;
-            PieceScript.SlowdownFactorRotation = 0.8f;
-            Piece.transform.rotation = Quaternion.Euler(0,0,Random.Range(0f, 360f));
+            Piece.transform.rotation = Quaternion.Euler(0,0,Random.Range(0f, 360f)); //Gives the gore a random start rotation
         }
 
-        for(int i = 0; i < BloodCount; i++)
+        for(int i = 0; i < BloodCount; i++) //Spawns x blood particles
         {
             GameObject Particle = Instantiate(BloodParticle, transform.position, Quaternion.identity);
             ActivePieces.Add(Particle);
@@ -49,16 +47,15 @@ public class DeathEffect : MonoBehaviour
 
             if(IsOmnidirectional)
             {
-                ParticleScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(15) * 200;
+                ParticleScript.StartVelocity = GetRandomDirectionVector() * GetWeightedNumber(15) * 200; //Send the blood in a random direction at a random speed
             }
             else
             {
-                ParticleScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(15) * 150;
-                ParticleScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * ParticleScript.StartVelocity;
+                ParticleScript.StartVelocity = GetLaunchVectorCenterWeighted(90) * GetWeightedNumber(15) * 150; //Send the blood upwards at a random angle and a random speed
+                ParticleScript.StartVelocity = Quaternion.Euler(0, 0, Angle) * ParticleScript.StartVelocity; //Rotates the send angle to the appropriate angle
             }
 
-            ParticleScript.SlowdownFactor = 0.8f;
-            Particle.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f));
+            Particle.transform.rotation = Quaternion.Euler(0, 0, Random.Range(0f, 360f)); //Gives the blood a random start rotation
         }
     }
 
@@ -122,6 +119,13 @@ public class DeathEffect : MonoBehaviour
         return Vector.normalized;
     }
 
+
+    /// <summary>
+    /// Gets a random direction.
+    /// </summary>
+    /// <returns>
+    /// The direction as a Vector2.
+    /// </returns>
     Vector2 GetRandomDirectionVector()
     {
         float RandomAngle = Random.Range(0f, 90f); //Gets a random angle up to 90 degrees
@@ -146,6 +150,9 @@ public class DeathEffect : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears all gores and blood particles from this DeathEffect
+    /// </summary>
     public void Clear()
     {
         foreach(GameObject Object in ActivePieces)

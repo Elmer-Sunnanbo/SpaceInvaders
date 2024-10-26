@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class MysteryShip : MonoBehaviour
 {
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
     float speed = 5f;
     float cycleTime = 5f;
 

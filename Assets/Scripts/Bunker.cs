@@ -6,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class Bunker : MonoBehaviour
 {
+    /// <summary>
+    /// This script is obsolete.
+    /// </summary>
     int nrOfHits = 0;
     SpriteRenderer spRend;
     private void Awake()

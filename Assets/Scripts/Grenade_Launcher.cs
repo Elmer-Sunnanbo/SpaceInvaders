@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Grenade_Launcher : MonoBehaviour
 {
+    /// <summary>
+    /// This script is obsolete
+    /// </summary>
     // Start is called before the first frame update
     void Start()
     {

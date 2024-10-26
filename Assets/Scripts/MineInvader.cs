@@ -10,39 +10,33 @@ public class MineInvader : MonoBehaviour
     [SerializeField] float Speed;
     Rigidbody2D Rigidbody;
 
-
-    SpriteRenderer spRend;
-    int animationFrame;
-    // Start is called before the first frame update
-
     private void Awake()
     {
-        spRend = GetComponent<SpriteRenderer>();
         MyCore = GetComponent<EnemyCore>();
     }
 
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
+        Rigidbody.velocity = new Vector2(0, -Speed); //Move downwards, velocity will never change
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //nått nedre kanten
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Boundary")) //When the invader reaches the lower boundary
         {
-            GameManager.Instance.OnBoundaryReached();
+            GameManager.Instance.GameOver(); //End the game
         }
     }
 
     private void Update()
     {
-        if (MyCore.HasBeenHit)
+        if (MyCore.HasBeenHit) //"On death"
         {
             Instantiate(MyDeath, transform.position, Quaternion.identity).GetComponent<DeathEffect>().Angle = MyCore.HitAngle;
             Instantiate(MineExplosion, transform.position, Quaternion.identity);
             Destroy(gameObject);
             ScreenShake.Instance.ShakeCam(0.4f, 1.5f);
         }
-        Rigidbody.velocity = new Vector2(0, -Speed);
     }
 }
